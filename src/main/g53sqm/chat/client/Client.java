@@ -77,26 +77,6 @@ public class Client {
 			}
 		});
 		inThread.start();
-		Scanner scanner;
-		scanner = new Scanner(System.in);
-		Thread outThread = new Thread(new Runnable() {
-
-			String lineToSend;
-
-			public void run() {
-				while (running) {
-					try {
-						lineToSend = scanner.nextLine();
-						System.out.println("Sending to server:" + lineToSend);
-						sendOverConnection(lineToSend);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				scanner.close();
-			}
-		});
-		outThread.start();
 
 	}
 	
