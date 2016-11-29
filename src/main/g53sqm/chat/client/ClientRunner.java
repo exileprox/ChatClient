@@ -3,11 +3,13 @@ package g53sqm.chat.client;
 import g53sqm.chat.client.servermessage.Message;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class ClientRunner {
 
     static Client client;
-    final static int PORT = 9000;
+    final static int PORT = 9090;
+    static boolean running = true;
 
     public static void main(String[] args) {
         try {
@@ -23,6 +25,27 @@ public class ClientRunner {
 				}
             	
             });
+            final Scanner scanner;
+    		scanner = new Scanner(System.in);
+    		Thread outThread = new Thread(new Runnable() {
+
+    			String lineToSend;
+
+    			public void run() {
+    				while (running) {
+    					try {
+    						lineToSend = scanner.nextLine();
+    						System.out.println("Sending to server:" + lineToSend);
+    						client.sendOverConnection(lineToSend);
+    					} catch (Exception e) {
+    						e.printStackTrace();
+    					}
+    				}
+    				scanner.close();
+    			}
+    		});
+    		outThread.start();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

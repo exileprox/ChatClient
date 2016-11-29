@@ -89,7 +89,7 @@ public class Client {
 		sendOverConnection(command.getFullCommand());
 	}
 
-	private synchronized void sendOverConnection(String message) {
+	public synchronized void sendOverConnection(String message) {
 		out.println(message);
 	}
 
